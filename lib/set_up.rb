@@ -8,10 +8,8 @@ class SetUp
     input.split(/\n/)
   end
 
-  def makes_array_of_arrays(input)
-    array_of_strings = split_lines(input)
-
-    array_of_strings.map do |string|
+  def makes_array_of_rows(input)
+    split_lines(input).map do |string|
       turn_puzzle_input_to_array(string)
     end
   end

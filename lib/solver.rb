@@ -12,8 +12,12 @@ class Solver
     return puzzle
   end
 
-  def transform_data(input)
-    set_up.makes_array_of_arrays(input)
+  def transform_data_from_rows(input)
+    set_up.makes_array_of_rows(input)
+  end
+
+  def transform_data_from_columns(input)
+    set_up.make_array_of_columns(input)
   end
 
   def it_is_not_solved?(input)
@@ -32,9 +36,13 @@ class Solver
   end
 
   def find_missing_nums_in_rows(input)
-    arrs = transform_data(input)
+    transform_data_from_rows(input).map do |arr|
+      find_missing_nums(arr)
+    end
+  end
 
-    arrs.map do |arr|
+  def find_missing_nums_in_columns(input)
+    transform_data_from_columns(input).map do |arr|
       find_missing_nums(arr)
     end
   end
@@ -51,45 +59,25 @@ class Solver
           num
         end
       end
+      return new_arr
     end
   end
 
-  def find_missing_num_by_index(arrs)
-    one_to_nine = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  def insert_missing_nums_to_all_rows(input)
+    array_of_rows = transform_data_from_rows(input)
+    missing_nums = find_missing_nums_in_rows(input)
 
-    arrs.each do |arr|
-      counter = 0
-      if one_to_nine.include?(arr[counter])
-        one_to_nine.delete(arr[counter])
-      end
-      counter += 1
+    array_of_rows.map do |arr|
+      insert_missing_nums_to_one_array(arr, missing_nums)
     end
-    return one_to_nine
   end
 
-  def insert_missing_nums_by_index(arrs)
+  def insert_missing_nums_to_all_columns(input)
+    array_of_rows = transform_data_from_columns(input)
+    missing_nums = find_missing_nums_in_columns(input)
 
+    array_of_rows.map do |arr|
+      insert_missing_nums_to_one_array(arr, missing_nums)
+    end
   end
-
-
-  # def insert_missing_nums_in_one_array(arr)
-  #   arrs.map do |arr|
-  #     insert_missing_nums_by_index(arr)
-  #   end
-  # end
-  #
-  # def insert_missing_nums_by_index(arrs)
-  #   missing_nums = find_missing_num_by_index(arrs)
-  #
-  #   arr_of_indexes = (0..8).to_a
-  #
-  #   arr_of_indexes.map do |num|
-  #     if a[num] == 0
-  #       [missing_nums]
-  #     else
-  #       a
-  #     end
-  #   end
-  # end
-
 end

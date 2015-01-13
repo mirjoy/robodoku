@@ -27,7 +27,7 @@ class SetUpTest < Minitest::Test
   def test_it_makes_array_of_arrays
     input = "8 659\n7156"
     assert_equal [[8, 0, 6, 5, 9], [7, 1, 5, 6]],
-    set_up.makes_array_of_arrays(input)
+    set_up.makes_array_of_rows(input)
   end
 
   def test_it_makes_array_of_columns

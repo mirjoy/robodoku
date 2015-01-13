@@ -1,6 +1,7 @@
 require './lib/solver.rb'
 require 'minitest/autorun'
 require 'minitest/pride'
+require 'pry'
 
 class SolverTest < Minitest::Test
   attr_reader :solver
@@ -17,7 +18,7 @@ class SolverTest < Minitest::Test
   def test_setup_works
     input = "8 659\n7156"
     assert_equal [[8, 0, 6, 5, 9], [7, 1, 5, 6]],
-    solver.transform_data(input)
+    solver.transform_data_from_rows(input)
   end
 
   def test_it_is_not_solved
@@ -68,34 +69,38 @@ class SolverTest < Minitest::Test
   end
 
   def test_it_can_find_one_missing_num_from_same_index
-    arr_of_arrs = [[8], [2], [6], [5], [0], [4], [3], [1], [7]]
-    assert_equal [9], solver.find_missing_num_by_index(arr_of_arrs)
+    strings = "026594317\n715638942\n394721865\n163459278\n948267153\n257813694\n531942786\n482176539\n679385421"
+    assert_equal [[8], [], [], [], [], [], [], [], [],],
+    solver.find_missing_nums_in_columns(strings)
   end
 
-  def test_it_can_find_two_missing_nums_from_same_index
-    arr_of_arrs = [[8], [0], [6], [5], [0], [4], [3], [1], [7]]
-    assert_equal [2, 9], solver.find_missing_num_by_index(arr_of_arrs)
+  def test_it_can_find_two_missing_nums_from_a_different_index
+    strings = " 26594317\n715 38942\n394721865\n163459278\n948267153\n257813694\n531942786\n482176539\n679385421"
+    assert_equal [[8], [], [], [6], [], [], [], [], [],],
+    solver.find_missing_nums_in_columns(strings)
   end
 
-  def test_it_can_insert_one_missing_num_by_index
+  def test_it_can_find_two_missing_nums_from_the_same_index
+    strings = " 26594317\n715 38942\n 94721865\n163459278\n948267153\n257813694\n531942786\n482176539\n679385421"
+    assert_equal [[3, 8], [], [], [6], [], [], [], [], [],],
+    solver.find_missing_nums_in_columns(strings)
+  end
+
+  def test_it_cam_insert_missing_nums_in_a_column
+    strings = " 26594317\n715 38942\n 94721865\n163459278\n948267153\n257813694\n531942786\n482176539\n679385421"
+    assert_equal [[[8], 2, 6, 5, 9, 4, 3, 1, 7], [7, 1, 5, [8], 3, 8, 9, 4, 2], [[8], 9, 4, 7, 2, 1, 8, 6, 5], [1, 6, 3, 4, 5, 9, 2, 7, 8], [9, 4, 8, 2, 6, 7, 1, 5, 3], [2, 5, 7, 8, 1, 3, 6, 9, 4], [5, 3, 1, 9, 4, 2, 7, 8, 6], [4, 8, 2, 1, 7, 6, 5, 3, 9], [6, 7, 9, 3, 8, 5, 4, 2, 1]],
+    solver.insert_missing_nums_to_all_rows(strings)
+  end
+
+  def test_it_cam_insert_missing_nums_in_a_row
+    strings = " 26594317\n715 38942\n 94721865\n163459278\n948267153\n257813694\n531942786\n482176539\n679385421"
+    assert solver.insert_missing_nums_to_all_rows(strings).include?([[8], 2, 6, 5, 9, 4, 3, 1, 7])
+  end
+
+  def test_it_cam_insert_missing_nums_in_a_column
     skip
-    arr_of_arrs = [[8], [2], [6], [5], [0], [4], [3], [1], [7]]
-    assert_equal [[8], [2], [6], [5], [[9]], [4], [3], [1], [7]],
-    solver.insert_missing_nums_by_index(arr_of_arrs)
+    strings = " 26594317\n715 38942\n 94721865\n163459278\n948267153\n257813694\n531942786\n482176539\n679385421"
+    assert_equal ["tbd"],
+    solver.insert_missing_nums_to_all_columns(strings).include?([8])
   end
-
-  def test_it_can_insert_two_missing_nums_by_index
-    skip
-    arr_of_arrs = [[8], [2], [6], [5], [0], [4], [0], [1], [7]]
-    assert_equal [[8], [2], [6], [5], [[3, 9]], [4], [[3, 9]], [1], [7]],
-    solver.insert_missing_nums_by_index(arr_of_arrs)
-  end
-
-  def test_it_can_insert_two_missing_nums_by_index_into_longer_array
-    skip
-    arr_of_arrs = [[8, 1], [2, 2], [6, 3], [5, 4], [0, 5], [4, 6], [7, 0], [1, 8], [7, 9]]
-    final_arr = [[8, 1], [2, 2], [6, 3], [5, 4], [[3, 9], 5], [4, 6], [7, [3, 9]], [1, 8], [7, 9]]
-    assert_equal final_arr, solver.insert_missing_nums_by_index(arr_of_arrs)
-  end
-
 end

@@ -1,7 +1,6 @@
+require './lib/set_up.rb'
 require 'minitest/autorun'
 require 'minitest/pride'
-require './set_up'
-require 'pry'
 
 class SetUpTest < Minitest::Test
   attr_reader :set_up
@@ -29,6 +28,12 @@ class SetUpTest < Minitest::Test
     input = "8 659\n7156"
     assert_equal [[8, 0, 6, 5, 9], [7, 1, 5, 6]],
     set_up.makes_array_of_arrays(input)
+  end
+
+  def test_it_makes_array_of_columns
+    input = "43\n54\n67"
+    assert_equal [[4, 5, 6], [3, 4, 7], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],
+    set_up.make_array_of_columns(input)
   end
 
 end

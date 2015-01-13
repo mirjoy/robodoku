@@ -2,10 +2,16 @@ require './lib/set_up'
 
 class Solver
 
-  attr_reader :set_up
+  attr_reader :set_up, :board
+  attr_accessor :file
 
-  def initialize
+  def initialize(file)
     @set_up = SetUp.new
+    @board = File.read(file)
+  end
+
+  def start_board
+    @board = file
   end
 
   def solve(puzzle)
@@ -48,18 +54,12 @@ class Solver
   end
 
   def insert_missing_nums_to_one_array(input, missing_nums)
-    if input.count(0) == 1
-      input[input.index(0)] = missing_nums[0]
-      return input
-    else
-      new_arr = input.map do |num|
-        if num.zero?
-          missing_nums
-        else
-          num
-        end
+    input.map do |num|
+      if num.zero?
+        missing_nums
+      else
+        num
       end
-      return new_arr
     end
   end
 
@@ -73,11 +73,20 @@ class Solver
   end
 
   def insert_missing_nums_to_all_columns(input)
-    array_of_rows = transform_data_from_columns(input)
+    array_of_columns = transform_data_from_columns(input)
     missing_nums = find_missing_nums_in_columns(input)
 
-    array_of_rows.map do |arr|
+    array_of_columns.map do |arr|
       insert_missing_nums_to_one_array(arr, missing_nums)
     end
   end
+
+  def put_it_back_together(arr_of_arrs)
+    arr_of_arrs.reduce('') do |final_string, arr|
+      final_string + arr.join + "\n"
+    end
+
+  end
+
+
 end

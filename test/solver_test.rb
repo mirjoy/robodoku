@@ -59,7 +59,7 @@ class SolverTest < Minitest::Test
   def test_it_can_fill_in_one_missing_num
     input = [8, 0, 6, 5, 9, 4, 3, 1, 7]
     missing_num = [2]
-    assert_equal [8, 2, 6, 5, 9, 4, 3, 1, 7], solver.insert_missing_nums_to_one_array(input, missing_num)
+    assert_equal [8, [2], 6, 5, 9, 4, 3, 1, 7], solver.insert_missing_nums_to_one_array(input, missing_num)
   end
 
   def test_it_can_fill_in_two_missing_nums
@@ -94,14 +94,7 @@ class SolverTest < Minitest::Test
 
   def test_it_cam_insert_missing_nums_in_a_row
     strings = " 26594317\n715 38942\n 94721865\n163459278\n948267153\n257813694\n531942786\n482176539\n679385421"
-    assert solver.insert_missing_nums_to_all_rows(strings).include?([[8], 2, 6, 5, 9, 4, 3, 1, 7])
-  end
-
-  def test_it_cam_insert_missing_nums_in_a_column
-    skip
-    strings = " 26594317\n715 38942\n 94721865\n163459278\n948267153\n257813694\n531942786\n482176539\n679385421"
-    assert_ ["tbd"],
-    solver.insert_missing_nums_to_all_columns(strings).include?([8])
+    assert_equal [8], solver.insert_missing_nums_to_all_rows(strings)
   end
 
   def test_it_can_fill_in_one_missing_num_from_file
@@ -114,6 +107,12 @@ class SolverTest < Minitest::Test
     skip
     final_output = solver.insert_missing_nums_to_all_rows(solver.board)
     assert_equal "826594317\n715638942\n394721865\n163459278\n948267153\n257813694\n531942786\n482176539\n679385421\n", solver.put_it_back_together(final_output)
+  end
+
+  def test_it_cam_insert_missing_nums_in_a_column
+    skip
+    strings = " 26594317\n715 38942\n 94721865\n163459278\n948267153\n257813694\n531942786\n482176539\n679385421"
+    assert_equal ["tbd"], solver.insert_missing_nums_to_all_columns(strings).include?([8])
   end
 
 end

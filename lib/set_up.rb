@@ -4,12 +4,14 @@ class SetUp
     input.chars.map {|i| i.to_i}
   end
 
-  def split_lines(input)
-    input.split(/\n/)
+  def transform_data(input)
+    rows = makes_array_of_rows(input)
+    columns = make_array_of_columns(input)
+    [rows, columns]
   end
 
   def makes_array_of_rows(input)
-    split_lines(input).map do |string|
+    input.split(/\n/).map do |string|
       turn_puzzle_input_to_array(string)
     end
   end

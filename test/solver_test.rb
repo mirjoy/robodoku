@@ -69,18 +69,21 @@ class SolverTest < Minitest::Test
   end
 
   def test_it_can_find_one_missing_num_from_same_column
+    skip
     strings = "026594317\n715638942\n394721865\n163459278\n948267153\n257813694\n531942786\n482176539\n679385421"
     assert_equal [[8], [], [], [], [], [], [], [], [],],
     solver.find_missing_nums_in_columns(strings)
   end
 
   def test_it_can_find_two_missing_nums_from_a_different_column
+    skip
     strings = " 26594317\n715 38942\n394721865\n163459278\n948267153\n257813694\n531942786\n482176539\n679385421"
     assert_equal [[8], [], [], [6], [], [], [], [], [],],
     solver.find_missing_nums_in_columns(strings)
   end
 
   def test_it_can_find_two_missing_nums_from_the_same_column
+    skip
     strings = " 26594317\n715 38942\n 94721865\n163459278\n948267153\n257813694\n531942786\n482176539\n679385421"
     assert_equal [[3, 8], [], [], [6], [], [], [], [], [],],
     solver.find_missing_nums_in_columns(strings)
@@ -105,14 +108,6 @@ class SolverTest < Minitest::Test
     solver.flatten_when_solved(arr)
   end
 
-  def test_it_can_flatten_when_solved
-    skip
-    strings = " 26594317\n715 38942\n 94721865\n163459278\n948267153\n257813694\n531942786\n482176539\n679385421"
-    big_arr = solver.insert_missing_nums_to_all_rows(strings)
-    assert_equal [[8, 2, 6, 5, 9, 4, 3, 1, 7], [7, 1, 5, 6, 3, 8, 9, 4, 2], [3, 9, 4, 7, 2, 1, 8, 6, 5], [1, 6, 3, 4, 5, 9, 2, 7, 8], [9, 4, 8, 2, 6, 7, 1, 5, 3], [2, 5, 7, 8, 1, 3, 6, 9, 4], [5, 3, 1, 9, 4, 2, 7, 8, 6], [4, 8, 2, 1, 7, 6, 5, 3, 9], [6, 7, 9, 3, 8, 5, 4, 2, 1]],
-    solver.flatten_when_solved(big_arr)
-  end
-
   def test_it_can_fill_in_one_missing_num_from_file
     skip
     final_output = solver.insert_missing_nums_to_all_rows(solver.board)
@@ -131,4 +126,31 @@ class SolverTest < Minitest::Test
     assert_equal ["tbd"], solver.insert_missing_nums_to_all_columns(strings).include?([8])
   end
 
+  def test_it_can_check_missing_nums_again_columns
+    input = [8, [2, 4], 6, 5, 9, 4, 3, 1]
+    assert_equal [8, [2], 6, 5, 9, 4, 3, 1],
+    solver.remove_existing_nums_from_possibility(input)
+  end
+
+  def test_find_existing_nums
+    input = [8, [2, 4], 6, 5, 9, 4, 3, 1]
+    assert_equal [8, 6, 5, 9, 4, 3, 1],
+    solver.find_existing_nums(input)
+  end
+
+  def test_it_can_flatten_when_solved
+    input = [8, [2], 6, 5, 9, 4, 3, 1]
+    assert_equal [8, 2, 6, 5, 9, 4, 3, 1],
+    solver.flatten_lonely_num(input)
+  end
+
+  def test_a_puzzle_is_complete
+    solver.board = File.read('./lib/puzzle_complete.txt')
+    assert_equal true, solver.puzzle_complete?(solver.board_disassemble)
+  end
+
+  def test_it_transforms_data
+    solver.board = "826594317\n"
+    assert_equal [8, 2, 6, 5, 9, 4, 3, 1, 7], solver.board_disassemble[0][0]
+  end
 end

@@ -19,11 +19,6 @@ class SetUpTest < Minitest::Test
     assert_equal [8, 0, 6, 5, 9, 4, 0, 1, 7], result
   end
 
-  def test_it_splits_lines
-    input = "8 6594317\n715638942"
-    assert_equal ["8 6594317", "715638942"], set_up.split_lines(input)
-  end
-
   def test_it_makes_array_of_rows
     input = "8 659\n7156"
     assert_equal [[8, 0, 6, 5, 9], [7, 1, 5, 6]],

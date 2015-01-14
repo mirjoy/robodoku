@@ -15,17 +15,26 @@ class SetUp
   end
 
   def make_array_of_columns(input)
-    arr_of_columns = []
-    num = 0
-
-    until num == 9
-      new_arr = split_lines(input).map do |string|
-          string[num].to_i
-      end
-      arr_of_columns << new_arr
-      num += 1
-    end
-    arr_of_columns
+    makes_array_of_rows(input).transpose
   end
 
+  def make_array_of_squares(input)
+    three_lines = start_squares_by_breaking_into_three_lines(input)
+
+    three_lines.map do |arr|
+      new_arr = arr.each_slice(3)
+    end
+
+  end
+
+  def start_squares_by_breaking_into_three_lines(input)
+    lines = makes_array_of_rows(input)
+      lines.each_slice(3).to_a
+  end
+
+  def break_square_lines_into_three_arrs_of_three(lines)
+    lines.map do |line|
+      line.each_slice(3).to_a
+    end
+  end
 end

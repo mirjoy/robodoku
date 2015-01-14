@@ -105,8 +105,6 @@ class SolverTest < Minitest::Test
     solver.flatten_when_solved(arr)
   end
 
-
-  [[8], 2, 6, 5, 9, 4, 3, 1, 7]
   def test_it_can_flatten_when_solved
     skip
     strings = " 26594317\n715 38942\n 94721865\n163459278\n948267153\n257813694\n531942786\n482176539\n679385421"

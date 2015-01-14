@@ -41,15 +41,19 @@ class Solver
     return one_to_nine
   end
 
+  # find arrays in the column
+  # compare contents of the array to what is already
+  # in the column
+
   def find_missing_nums_in_rows(input)
-    transform_data_from_rows(input).map do |arr|
-      find_missing_nums(arr)
+    transform_data_from_rows(input).map do |arr_of_known_nums|
+      find_missing_nums(arr_of_known_nums)
     end
   end
 
   def find_missing_nums_in_columns(input)
-    transform_data_from_columns(input).map do |arr|
-      find_missing_nums(arr)
+    transform_data_from_columns(input).map do |arr_of_known_nums|
+      find_missing_nums(arr_of_known_nums)
     end
   end
 
@@ -92,5 +96,4 @@ class Solver
         arr.flatten
       end
   end
-
 end

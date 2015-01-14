@@ -31,9 +31,9 @@ class Solver
   end
 
   def find_missing_nums(arr)
-    one_to_nine = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    one_to_nine = (1..9).to_a
 
-    arr.map do |num|
+    arr.each do |num|
       if one_to_nine.include?(num) || num.zero?
         one_to_nine.delete(num)
       end
@@ -68,7 +68,7 @@ class Solver
     missing_nums = find_missing_nums_in_rows(input)
 
     array_of_rows.map do |arr|
-      insert_missing_nums_to_one_array(arr, missing_nums)
+      insert_missing_nums_to_one_array(arr, missing_nums[array_of_rows.index(arr)])
     end
   end
 
@@ -77,7 +77,7 @@ class Solver
     missing_nums = find_missing_nums_in_columns(input)
 
     array_of_columns.map do |arr|
-      insert_missing_nums_to_one_array(arr, missing_nums)
+      insert_missing_nums_to_one_array(arr, missing_nums[array_of_columns.index(arr)])
     end
   end
 
@@ -85,8 +85,12 @@ class Solver
     arr_of_arrs.reduce('') do |final_string, arr|
       final_string + arr.join + "\n"
     end
-
   end
 
+  def flatten_one_arr_when_solved(arr)
+    if arr.all? {|ele| ele.length == 1}
+        arr.flatten
+      end
+  end
 
 end

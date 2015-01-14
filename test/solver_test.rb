@@ -92,9 +92,27 @@ class SolverTest < Minitest::Test
     solver.insert_missing_nums_to_all_rows(strings)
   end
 
-  def test_it_cam_insert_missing_nums_in_a_row
+  def test_it_cam_insert_one_missing_num_per_row
     strings = " 26594317\n715 38942\n 94721865\n163459278\n948267153\n257813694\n531942786\n482176539\n679385421"
-    assert_equal [8], solver.insert_missing_nums_to_all_rows(strings)
+    assert_equal [[[8], 2, 6, 5, 9, 4, 3, 1, 7], [7, 1, 5, [6], 3, 8, 9, 4, 2], [[3], 9, 4, 7, 2, 1, 8, 6, 5], [1, 6, 3, 4, 5, 9, 2, 7, 8], [9, 4, 8, 2, 6, 7, 1, 5, 3], [2, 5, 7, 8, 1, 3, 6, 9, 4], [5, 3, 1, 9, 4, 2, 7, 8, 6], [4, 8, 2, 1, 7, 6, 5, 3, 9], [6, 7, 9, 3, 8, 5, 4, 2, 1]],
+    solver.insert_missing_nums_to_all_rows(strings)
+  end
+
+  def test_it_can_flatten__one_arr_when_solved
+    skip
+    arr = [[8], 2, 6, 5, 9, 4, 3, 1, 7]
+    assert_equal [8, 2, 6, 5, 9, 4, 3, 1, 7]
+    solver.flatten_when_solved(arr)
+  end
+
+
+  [[8], 2, 6, 5, 9, 4, 3, 1, 7]
+  def test_it_can_flatten_when_solved
+    skip
+    strings = " 26594317\n715 38942\n 94721865\n163459278\n948267153\n257813694\n531942786\n482176539\n679385421"
+    big_arr = solver.insert_missing_nums_to_all_rows(strings)
+    assert_equal [[8, 2, 6, 5, 9, 4, 3, 1, 7], [7, 1, 5, 6, 3, 8, 9, 4, 2], [3, 9, 4, 7, 2, 1, 8, 6, 5], [1, 6, 3, 4, 5, 9, 2, 7, 8], [9, 4, 8, 2, 6, 7, 1, 5, 3], [2, 5, 7, 8, 1, 3, 6, 9, 4], [5, 3, 1, 9, 4, 2, 7, 8, 6], [4, 8, 2, 1, 7, 6, 5, 3, 9], [6, 7, 9, 3, 8, 5, 4, 2, 1]],
+    solver.flatten_when_solved(big_arr)
   end
 
   def test_it_can_fill_in_one_missing_num_from_file

@@ -14,20 +14,8 @@ class Solver
     @board = file
   end
 
-  def solve(puzzle)
-    return puzzle
-  end
-
-  def puzzle_complete?(input)
-    input[0].flatten.reduce(:+) == 405
-  end
-
   def board_disassemble
       @board = set_up.transform_data(board)
-  end
-
-  def solved?(input)
-    input.include?(0)
   end
 
   def find_missing_nums(arr)
@@ -40,11 +28,6 @@ class Solver
     end
     return one_to_nine
   end
-
-  # find arrays in the column
-  # compare contents of the array to what is already
-  # in the column using .is_a?(Array)
-
 
   def find_missing_nums_in_rows(input)
     set_up.transform_data(input)[0].map do |arr_of_known_nums|
@@ -59,6 +42,15 @@ class Solver
       else
         num
       end
+    end
+  end
+
+  def insert_missing_nums_to_all_rows(input)
+    array_of_rows = set_up.transform_data(input)[0]
+    missing_nums = find_missing_nums_in_rows(input)
+
+    array_of_rows.map do |arr|
+      insert_missing_nums_to_one_array(arr, missing_nums[array_of_rows.index(arr)])
     end
   end
 
@@ -80,12 +72,13 @@ class Solver
     end
   end
 
-  def insert_missing_nums_to_all_rows(input)
-    array_of_rows = set_up.transform_data(input)[0]
-    missing_nums = find_missing_nums_in_rows(input)
-
-    array_of_rows.map do |arr|
-      insert_missing_nums_to_one_array(arr, missing_nums[array_of_rows.index(arr)])
+  def flatten_lonely_num(arr)
+    arr.map do |ele|
+      if ele.is_a?(Array) && ele.size == 1
+        ele = ele[0]
+      else
+        ele
+      end
     end
   end
 
@@ -95,14 +88,16 @@ class Solver
     end
   end
 
-  def flatten_lonely_num(arr)
-    arr.map do |ele|
-      if ele.is_a?(Array) && ele.size == 1
-        ele = ele[0]
-      else
-        ele
-      end
-    end
+  def puzzle_complete?(input)
+    input[0].flatten.reduce(:+) == 405
+  end
+
+  def solved?(input)
+    input.include?(0)
+  end
+
+  def solve(puzzle)
+    return puzzle
   end
 
 end

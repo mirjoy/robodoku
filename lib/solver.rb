@@ -26,7 +26,7 @@ class Solver
       @board = set_up.transform_data(board)
   end
 
-  def it_is_not_solved?(input)
+  def solved?(input)
     input.include?(0)
   end
 
@@ -47,7 +47,7 @@ class Solver
 
 
   def find_missing_nums_in_rows(input)
-    transform_data_from_rows(input).map do |arr_of_known_nums|
+    set_up.transform_data(input)[0].map do |arr_of_known_nums|
       find_missing_nums(arr_of_known_nums)
     end
   end
@@ -81,7 +81,7 @@ class Solver
   end
 
   def insert_missing_nums_to_all_rows(input)
-    array_of_rows = transform_data_from_rows(input)
+    array_of_rows = set_up.transform_data(input)[0]
     missing_nums = find_missing_nums_in_rows(input)
 
     array_of_rows.map do |arr|

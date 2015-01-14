@@ -46,12 +46,14 @@ class SetUpTest < Minitest::Test
   end
 
   def test_it_makes_arr_of_squares
+    skip
     input = "8 6594317\n715638942\n394 21865\n163459278\n948267153\n257813694\n531942786\n482176539\n679385421\n"
     output = set_up.make_array_of_squares(input)
     assert_equal [8, 0, 6, 7, 1, 5, 3, 9, 4], output[0]
   end
 
   def test_it_breaks_lines_into_3_arrays_of_3
+    skip
     assert_equal [[8, 0, 6], [5, 9, 4], [3, 1, 7]]
   end
 
